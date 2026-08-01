@@ -1,0 +1,41 @@
+{
+  "skill_name": "easy-wiki",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想搭建一个知识库，整理我日常看到的文章和播客，但不知道怎么开始。",
+      "expected_output": "Agent 激活 easy-wiki skill，开始场景识别，判断为场景一后读取 scenario-1.md 执行访谈",
+      "files": [],
+      "expectations": [
+        "Agent 识别到用户的知识库搭建意图并激活 skill",
+        "Agent 提出场景识别问题（给自己用还是给别人看）",
+        "Agent 没有一次性抛出所有问题，而是分步提问",
+        "Agent 尝试获取内容种子"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我是销售总监，我想把我的销售经验整理成知识库给我的下属看，他们老是问我同样的客户问题，我想让他们能自己查。",
+      "expected_output": "Agent 识别为场景二，开始受众与目的访谈，追问受众具体角色和协作方式",
+      "files": [],
+      "expectations": [
+        "Agent 正确识别为场景二（组织共享知识库）",
+        "Agent Read 了 references/scenario-2.md",
+        "Agent 从受众与目的开始访谈，而非直接给目录结构",
+        "Agent 追问了受众的具体角色（不是泛泛地说'团队'）"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我想搭建一个自己的第二大脑，平时看了很多公众号文章和播客，但看完就忘了，想系统整理一下。",
+      "expected_output": "Agent 识别为场景一，开始信息消费访谈，追问具体信源和内容种子",
+      "files": [],
+      "expectations": [
+        "Agent 正确识别为场景一（个人知识库）",
+        "Agent Read 了 references/scenario-1.md",
+        "Agent 追问了具体的信源渠道和内容种子",
+        "Agent 提到产出目标，引导用户思考知识库的最终用途"
+      ]
+    }
+  ]
+}

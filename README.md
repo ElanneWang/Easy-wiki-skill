@@ -1,0 +1,93 @@
+# Easy Wiki Skill
+
+从零搭建 LLM 知识库的引导 Skill。安装后，用户只需说"我想搭建知识库"，即可通过结构化访谈生成定制化的知识库项目。
+
+## 安装
+
+```bash
+npx skills add https://github.com/ElanneWang/Easy-wiki-skill.git
+```
+
+## 使用
+
+安装后，在你的 AI 编码工具中打开任意项目（或新建一个），说：
+
+> 我想搭建一个知识库
+
+Skill 会自动激活，通过访谈引导你完成知识库的搭建。
+
+## 它做什么
+
+```
+用户表达搭建意图
+    ↓
+场景识别（个人 vs 组织共享）
+    ↓
+结构化访谈（挖掘真实需求）
+    ↓
+生成知识库（目录 + AGENTS.md + 模板）
+    ↓
+处理内容种子（演示完整流程）
+    ↓
+可选：安装媒体摄入工具
+```
+
+## 两种场景
+
+| 场景 | 适用人群 | 核心问题 |
+|------|---------|---------|
+| 个人知识库 | 研究者、创业者、投资人、创作者 | 你消费什么、你怎么思考、你想产出什么 |
+| 组织共享知识库 | 企业中的决策层、产品经理、研发、销售 | 你服务谁、协作关系是什么、输入输出是什么 |
+
+## 项目结构
+
+```
+easy-wiki-skill/
+├── SKILL.md              # Skill 主文件（访谈流程和引导逻辑）
+├── references/
+│   ├── scenario-1.md     # 场景一访谈流程和翻译规则
+│   ├── scenario-2.md     # 场景二访谈流程和翻译规则
+│   └── templates.md      # AGENTS.md 模板 + 页面模板
+├── assets/
+│   ├── bootstrap-agents.md   # AGENTS.md 初始模板
+│   ├── readme-template.md    # README 模板
+│   ├── gitignore-template    # .gitignore 模板
+│   ├── index-template.md     # wiki/index.md 模板
+│   └── log-template.md       # wiki/log.md 模板
+├── scripts/
+│   └── init-wiki.sh      # 目录结构初始化脚本
+└── evals/
+    └── evals.json        # 测试用例
+```
+
+## 核心设计
+
+### 双向关联约束
+
+知识库不是文件仓库，而是知识网络。页面之间的关联分三级：
+
+- **必须双向**：concepts↔cases, outputs↔concepts, outputs↔cases
+- **建议双向**：thoughts↔sources, thoughts↔cases, sources↔entities
+- **单向引用**：synthesis→sources, cases→sources
+
+### 访谈驱动
+
+不直接给模板，而是通过对话挖掘用户真实需求。访谈节奏：每次只问 2-3 个问题，确认理解后再继续。
+
+### 自包含
+
+安装 skill 后无需任何其他依赖。模板、脚本、配置全部打包在 skill 内。媒体摄入工具为可选安装。
+
+## 可选工具
+
+如果用户日常会处理播客或视频内容，可以安装媒体摄入工具：
+
+- faster-whisper 语音转录
+- 播客/视频下载脚本
+- 内容摄入工作手册
+
+工具源仓库：https://github.com/ElanneWang/llm-wiki-template
+
+## 许可
+
+MIT
