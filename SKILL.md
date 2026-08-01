@@ -3,10 +3,12 @@ name: easy-wiki
 description: >
   从零搭建 LLM 知识库的引导 Skill。当用户想搭建知识库、整理知识系统、搭建第二大脑、
   把经验分享给团队、初始化 wiki，或者表达"我想管理我的知识""帮团队建知识库"
-  "怎么用这个 wiki""我想整理我的经验给同事看"等意图时，激活本 skill。
+  "怎么用这个 wiki""我想整理我的经验给同事看""笔记太乱了想系统管理"
+  "想把沉淀的知识给下属看""团队知识怎么管理"等意图时，激活本 skill。
   即使用户没有明确说"onboarding"，只要表达了对知识库搭建无从下手、需要引导的意图，
-  就应激活。通过结构化访谈判断用户属于个人知识库场景还是组织共享知识库场景，
-  按对应流程挖掘需求，生成定制化的 AGENTS.md、目录结构和页面模板，
+  就应激活。注意：如果用户只是要求写一篇文章、做一次数据整理、或查询某个具体信息，
+  这些是内容创作或检索请求，不应激活本 skill。通过结构化访谈判断用户属于个人知识库场景
+  还是组织共享知识库场景，按对应流程挖掘需求，生成定制化的 AGENTS.md、目录结构和页面模板，
   并用用户提供的内容种子完成首次内容处理。安装此 skill 后用户无需任何其他依赖，
   即可从零创建一个完整可用的知识库项目。
 ---
@@ -80,11 +82,16 @@ description: >
 
 ### 生成方式
 
-运行初始化脚本创建基础目录结构：
+运行初始化脚本创建基础目录结构，并通过参数传入访谈确定需要的额外目录：
 
 ```bash
-bash scripts/init-wiki.sh <项目路径> <场景: personal|organizational>
+# 基础结构 + 访谈确定的额外目录
+bash scripts/init-wiki.sh <项目路径> <场景: personal|organizational> [额外目录...]
+# 示例：用户有播客信源且需要实体追踪
+bash scripts/init-wiki.sh ~/my-wiki personal raw/podcasts wiki/sources wiki/entities
 ```
+
+脚本只创建最小必要目录（raw/, wiki/, wiki/concepts/, wiki/cases/，场景二额外创建 wiki/outputs/），其余目录通过参数按需创建。这确保不会出现用户困惑的空目录。
 
 然后用访谈结果填充 AGENTS.md，覆盖脚本生成的 bootstrap 版本。
 

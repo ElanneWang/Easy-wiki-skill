@@ -24,9 +24,16 @@
 - 分级约束：必须双向 / 建议双向 / 单向引用
 - 页面模板：统一的 frontmatter + 正文结构
 
-## 工具
+## 工具（可选）
 
-如需安装媒体摄入工具（播客转录、视频转写），运行：
+如果你日常会处理播客或视频内容，可以安装媒体摄入工具（faster-whisper 语音转录、播客/视频下载脚本等）。
+
+安装方式：
 ```bash
+git clone --depth 1 https://github.com/ElanneWang/llm-wiki-template.git /tmp/llm-wiki-tools
+cp -r /tmp/llm-wiki-tools/tools/ ./tools/
+rm -rf /tmp/llm-wiki-tools
 cd tools && bash setup_media_tools.sh
 ```
+
+> 注意：工具安装是可选的。知识库的核心功能（文本处理、关联、检索）不依赖这些工具。

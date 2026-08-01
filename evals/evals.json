@@ -3,10 +3,11 @@
   "evals": [
     {
       "id": 1,
+      "name": "personal-wiki-basic",
       "prompt": "我想搭建一个知识库，整理我日常看到的文章和播客，但不知道怎么开始。",
       "expected_output": "Agent 激活 easy-wiki skill，开始场景识别，判断为场景一后读取 scenario-1.md 执行访谈",
       "files": [],
-      "expectations": [
+      "assertions": [
         "Agent 识别到用户的知识库搭建意图并激活 skill",
         "Agent 提出场景识别问题（给自己用还是给别人看）",
         "Agent 没有一次性抛出所有问题，而是分步提问",
@@ -15,10 +16,11 @@
     },
     {
       "id": 2,
+      "name": "org-wiki-sales-director",
       "prompt": "我是销售总监，我想把我的销售经验整理成知识库给我的下属看，他们老是问我同样的客户问题，我想让他们能自己查。",
       "expected_output": "Agent 识别为场景二，开始受众与目的访谈，追问受众具体角色和协作方式",
       "files": [],
-      "expectations": [
+      "assertions": [
         "Agent 正确识别为场景二（组织共享知识库）",
         "Agent Read 了 references/scenario-2.md",
         "Agent 从受众与目的开始访谈，而非直接给目录结构",
@@ -27,14 +29,52 @@
     },
     {
       "id": 3,
+      "name": "personal-wiki-second-brain",
       "prompt": "我想搭建一个自己的第二大脑，平时看了很多公众号文章和播客，但看完就忘了，想系统整理一下。",
       "expected_output": "Agent 识别为场景一，开始信息消费访谈，追问具体信源和内容种子",
       "files": [],
-      "expectations": [
+      "assertions": [
         "Agent 正确识别为场景一（个人知识库）",
         "Agent Read 了 references/scenario-1.md",
         "Agent 追问了具体的信源渠道和内容种子",
         "Agent 提到产出目标，引导用户思考知识库的最终用途"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "ambiguous-note-organizing",
+      "prompt": "我平时记了很多笔记在各种地方，备忘录、微信收藏、飞书文档里都有，感觉特别乱，想找个方式系统管理一下。",
+      "expected_output": "Agent 识别到知识管理意图并激活 skill，通过场景识别问题判断是个人还是组织场景",
+      "files": [],
+      "assertions": [
+        "Agent 识别到'系统管理笔记'背后的知识库搭建意图",
+        "Agent 激活了 easy-wiki skill 而非直接给整理建议",
+        "Agent 提出场景识别问题来区分个人 vs 组织",
+        "Agent 没有直接跳到工具推荐或整理方法"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "mixed-scenario-ceo",
+      "prompt": "我是公司CEO，一方面我自己需要持续学习行业知识保持判断力，另一方面我想把我的战略思考和管理经验沉淀下来给核心团队看，省得每次开会都要从头讲。",
+      "expected_output": "Agent 识别为混合场景，引导用户选择优先场景，而非硬选一个",
+      "files": [],
+      "assertions": [
+        "Agent 识别到用户同时有个人积累和团队共享两种需求",
+        "Agent 没有直接选一个场景，而是引导用户选择优先级",
+        "Agent 提出类似'如果只能先做一个，你先做哪个'的引导问题",
+        "Agent 在选定主场景后提到会为另一个场景预留扩展空间"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "should-not-trigger-article-writing",
+      "prompt": "帮我写一篇关于 AI 赋能电商行业的深度分析文章，要有数据支撑和案例。",
+      "expected_output": "Agent 不应激活 easy-wiki skill，这是内容创作请求而非知识库搭建请求",
+      "files": [],
+      "assertions": [
+        "Agent 没有激活 easy-wiki skill",
+        "Agent 直接处理写作请求而非启动知识库访谈流程"
       ]
     }
   ]
