@@ -82,7 +82,9 @@ description: >
 
 ### 生成方式
 
-运行初始化脚本创建基础目录结构，并通过参数传入访谈确定需要的额外目录：
+先创建基础目录结构。最小必要目录：raw/, wiki/, wiki/concepts/, wiki/cases/（场景二额外创建 wiki/outputs/），其余目录根据访谈结果按需创建。不要预建用户用不到的目录。
+
+**如果有 bash 环境**，可以用 init-wiki.sh 脚本：
 
 ```bash
 # 基础结构 + 访谈确定的额外目录
@@ -91,11 +93,17 @@ bash scripts/init-wiki.sh <项目路径> <场景: personal|organizational> [额�
 bash scripts/init-wiki.sh ~/my-wiki personal raw/podcasts wiki/sources wiki/entities
 ```
 
-脚本只创建最小必要目录（raw/, wiki/, wiki/concepts/, wiki/cases/，场景二额外创建 wiki/outputs/），其余目录通过参数按需创建。这确保不会出现用户困惑的空目录。
+**如果只有 Windows PowerShell**（bash 不可用），直接手动创建目录。shell 环境为 powershell 时，用 `New-Item -ItemType Directory -Force` 创建目录。效果等价，不需要强制走脚本。
 
-然后用访谈结果填充 AGENTS.md，覆盖脚本生成的 bootstrap 版本。
+创建完目录后，依次生成以下文件（直接用 Write 工具写入，而非复制模板文件）：
 
-把生成的配置方案给用户确认。用可读的格式呈现——不要直接丢一大段 YAML，而是用自然语言解释"基于你刚才说的，我建议这样组织……原因是……"。
+1. **AGENTS.md** — 基于 `templates.md` 中对应场景的模板填充。不要先复制 bootstrap 版本再覆盖，直接生成最终版
+2. **README.md** — 基于 `assets/readme-template.md` 的结构填充访谈结果
+3. **wiki/index.md** — 基于 `assets/index-template.md` 的结构填充
+4. **wiki/log.md** — 基于 `assets/log-template.md` 的结构填充
+5. **.gitignore** — 基于 `assets/gitignore-template` 的内容
+
+生成后，把配置方案（包括目录结构和 AGENTS.md 的关键设定：角色定义、受众、工作流）用自然语言总结给用户确认。用可读的格式呈现——不要直接丢一大段 YAML，而是用自然语言解释"基于你刚才说的，我建议这样组织……原因是……"。收到用户明确确认后再进入第四步。
 
 ### 知识库目录结构
 
@@ -188,6 +196,8 @@ bash <skill-path>/scripts/setup-media-tools.sh
 安装完成后，**Read** `references/media-ingestion-guide.md` 了解各平台的具体使用方法。当用户发来媒体链接时，按手册中的对应平台方法获取内容。
 
 如果用户不需要，跳过即可。知识库的核心功能（文本处理、关联、检索）不依赖这些工具。
+
+**这一步不可静默跳过。** 即使你认为用户大概率不需要媒体工具，也必须把工具安装的选项呈现给用户，让用户自己决定。用户确认不需要后，记录"用户不需要"并结束 onboarding 流程。
 
 ## 双向关联约束
 
