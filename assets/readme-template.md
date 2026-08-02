@@ -26,14 +26,13 @@
 
 ## 工具（可选）
 
-如果你日常会处理播客或视频内容，可以安装媒体摄入工具（faster-whisper 语音转录、播客/视频下载脚本等）。
+如果你日常会处理播客或视频内容，可以安装媒体摄入工具（支持公众号、小红书、播客、B站、抖音、YouTube 等 12 个平台）。
 
-安装方式：
+安装方式（使用 easy-wiki skill 自带脚本）：
 ```bash
-git clone --depth 1 https://github.com/ElanneWang/llm-wiki-template.git /tmp/llm-wiki-tools
-cp -r /tmp/llm-wiki-tools/tools/ ./tools/
-rm -rf /tmp/llm-wiki-tools
-cd tools && bash setup_media_tools.sh
+bash <skill-path>/scripts/setup-media-tools.sh
 ```
+
+详细使用方法请参阅 skill 的 `references/media-ingestion-guide.md`。
 
 > 注意：工具安装是可选的。知识库的核心功能（文本处理、关联、检索）不依赖这些工具。

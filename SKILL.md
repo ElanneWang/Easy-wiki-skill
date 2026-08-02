@@ -158,24 +158,34 @@ team-wiki/
 
 知识库支持媒体内容摄入工具（播客转录、视频转写等）。这些工具不是必须的，但如果用户日常会处理播客或视频内容，安装后可以自动转录并整理。
 
+工具已经内置在 skill 的 `scripts/` 和 `references/` 中，不需要从外部仓库克隆：
+
+| 内置资源 | 位置 | 作用 |
+|---------|------|------|
+| 环境初始化脚本 | `scripts/setup-media-tools.sh` | 安装 Python 依赖、克隆 chubbyskills、检查环境 |
+| 转录脚本 | `scripts/transcribe-media.py` | 播客/视频下载 + faster-whisper 转录 |
+| 摄入工作手册 | `references/media-ingestion-guide.md` | 12 个平台的获取方法和命令速查 |
+
 在知识库框架搭建完成后，向用户说明：
 
-> 你的知识库已经可以用了。如果你日常会处理播客、视频等媒体内容，可以安装媒体摄入工具来自动化转录和整理。工具包括：
-> - faster-whisper 语音转录
-> - 播客/视频下载脚本
-> - 内容摄入工作手册
+> 你的知识库已经可以用了。如果你日常会处理播客、视频等媒体内容，可以安装媒体摄入工具来自动化转录和整理。支持 12 个平台（公众号、小红书、播客、B站、抖音、YouTube 等）。
 >
 > 需要我帮你安装吗？
 
-如果用户同意，引导安装：
+如果用户同意，运行 skill 自带的安装脚本：
 
 ```bash
-# 克隆工具仓库（仅 tools 目录）
-git clone --depth 1 https://github.com/ElanneWang/llm-wiki-template.git /tmp/llm-wiki-tools
-cp -r /tmp/llm-wiki-tools/tools/ <用户项目路径>/tools/
-rm -rf /tmp/llm-wiki-tools
-cd <用户项目路径>/tools && bash setup_media_tools.sh
+bash <skill-path>/scripts/setup-media-tools.sh
 ```
+
+安装脚本会自动完成：
+1. 检查前置环境（Python 3.10+、git、pip、ffmpeg）
+2. 克隆 chubbyskills 工具集（含各平台抓取脚本）
+3. 安装 Python 依赖（faster-whisper、funasr、torch、yt-dlp 等）
+4. 检查 lark-cli（飞书内容获取）
+5. 输出平台支持矩阵和环境状态报告
+
+安装完成后，**Read** `references/media-ingestion-guide.md` 了解各平台的具体使用方法。当用户发来媒体链接时，按手册中的对应平台方法获取内容。
 
 如果用户不需要，跳过即可。知识库的核心功能（文本处理、关联、检索）不依赖这些工具。
 

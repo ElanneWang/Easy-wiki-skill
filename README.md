@@ -43,21 +43,24 @@ Skill 会自动激活，通过访谈引导你完成知识库的搭建。
 
 ```
 easy-wiki-skill/
-├── SKILL.md              # Skill 主文件（访谈流程和引导逻辑）
+├── SKILL.md                          # Skill 主文件（访谈流程和引导逻辑）
 ├── references/
-│   ├── scenario-1.md     # 场景一访谈流程和翻译规则
-│   ├── scenario-2.md     # 场景二访谈流程和翻译规则
-│   └── templates.md      # AGENTS.md 模板 + 页面模板
+│   ├── scenario-1.md                 # 场景一访谈流程和翻译规则
+│   ├── scenario-2.md                 # 场景二访谈流程和翻译规则
+│   ├── templates.md                  # AGENTS.md 模板 + 页面模板
+│   └── media-ingestion-guide.md      # 媒体内容摄入工作手册（12 个平台）
 ├── assets/
-│   ├── bootstrap-agents.md   # AGENTS.md 初始模板
-│   ├── readme-template.md    # README 模板
-│   ├── gitignore-template    # .gitignore 模板
-│   ├── index-template.md     # wiki/index.md 模板
-│   └── log-template.md       # wiki/log.md 模板
+│   ├── bootstrap-agents.md           # AGENTS.md 初始模板
+│   ├── readme-template.md            # README 模板
+│   ├── gitignore-template            # .gitignore 模板
+│   ├── index-template.md             # wiki/index.md 模板
+│   └── log-template.md               # wiki/log.md 模板
 ├── scripts/
-│   └── init-wiki.sh      # 目录结构初始化脚本
+│   ├── init-wiki.sh                  # 目录结构初始化脚本
+│   ├── setup-media-tools.sh          # 媒体工具环境初始化
+│   └── transcribe-media.py           # 播客/视频转录脚本
 └── evals/
-    └── evals.json        # 测试用例
+    └── evals.json                    # 测试用例
 ```
 
 ## 核心设计
@@ -80,13 +83,16 @@ easy-wiki-skill/
 
 ## 可选工具
 
-如果用户日常会处理播客或视频内容，可以安装媒体摄入工具：
+如果用户日常会处理播客或视频内容，可以安装媒体摄入工具。工具已内置在 skill 中，无需从外部仓库克隆：
 
-- faster-whisper 语音转录
-- 播客/视频下载脚本
-- 内容摄入工作手册
+```bash
+# 运行 skill 自带的安装脚本
+bash scripts/setup-media-tools.sh
+```
 
-工具源仓库：https://github.com/ElanneWang/llm-wiki-template
+支持的平台：微信公众号、小红书、小宇宙播客、飞书社区、抖音、B站、YouTube、TikTok、微博、知乎、X/Twitter、喜马拉雅。
+
+详细使用方法见 `references/media-ingestion-guide.md`。
 
 ## 许可
 
